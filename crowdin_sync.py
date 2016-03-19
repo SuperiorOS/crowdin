@@ -3,9 +3,10 @@
 # crowdin_sync.py
 #
 # Updates Crowdin source translations and pushes translations
-# directly to CyanogenMod's Gerrit.
+# directly to PAC-ROM's Gerrit.
 #
 # Copyright (C) 2014-2015 The CyanogenMod Project
+# This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -82,8 +83,8 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('ssh://%s@review.cyanogenmod.org:29418/%s' % (username, name),
-                      'HEAD:refs/for/%s%%topic=translation' % branch)
+        repo.git.push('ssh://%s@review.pac-rom.com:29418/%s' % (username, name),
+                      'HEAD:refs/drafts/%s%%topic=translation_PAC' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
         print('Failed to push commit for %s' % name, file=sys.stderr)
@@ -108,17 +109,16 @@ def find_xml(base_path):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Synchronising CyanogenMod's translations with Crowdin")
+        description="Synchronising PAC-ROM's translations with Crowdin")
     sync = parser.add_mutually_exclusive_group()
     parser.add_argument('-u', '--username', help='Gerrit username',
                         required=True)
-    parser.add_argument('-b', '--branch', help='CyanogenMod branch',
+    parser.add_argument('-b', '--branch', help='PAC-ROM branch',
                         required=True)
-    parser.add_argument('-c', '--config', help='Custom yaml config')
     sync.add_argument('--no-upload', action='store_true',
-                      help='Only download CM translations from Crowdin')
+                      help='Only download PAC-ROM translations from Crowdin')
     sync.add_argument('--no-download', action='store_true',
-                      help='Only upload CM source translations to Crowdin')
+                      help='Only upload PAC-ROM source translations to Crowdin')
     return parser.parse_args()
 
 # ################################# PREPARE ################################## #
@@ -145,7 +145,8 @@ def load_xml(x):
         return None
 
 
-def check_files(files):
+def check_files(branch):
+    files = ['%s/crowdin/crowdin_%s.yaml' % (_DIR, branch)]
     for f in files:
         if not os.path.isfile(f):
             print('You have no %s.' % f, file=sys.stderr)
@@ -155,52 +156,27 @@ def check_files(files):
 # ################################### MAIN ################################### #
 
 
-def upload_crowdin(branch, config, no_upload=False):
+def upload_crowdin(branch, no_upload=False):
     if no_upload:
         print('Skipping source translations upload')
         return
 
-    if config:
-        print('\nUploading Crowdin source translations (custom config)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/%s' % (_DIR, config),
-                   'upload', 'sources'])
-    else:
-        print('\nUploading Crowdin source translations '
-              '(AOSP supported languages)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
-                   'upload', 'sources'])
-
-        print('\nUploading Crowdin source translations '
-              '(non-AOSP supported languages)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/crowdin_%s_aosp.yaml' % (_DIR, branch),
-                   'upload', 'sources'])
+    print('\nUploading Crowdin source translations')
+    check_run(['crowdin-cli',
+               '--config=%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
+               'upload', 'sources'])
 
 
-def download_crowdin(base_path, branch, xml, username, config,
-                     no_download=False):
+def download_crowdin(base_path, branch, xml, username, no_download=False):
     if no_download:
         print('Skipping translations download')
         return
 
-    if config:
-        print('\nDownloading Crowdin translations (custom config)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/%s' % (_DIR, config),
-                   'download', '--ignore-match'])
-    else:
-        print('\nDownloading Crowdin translations (AOSP supported languages)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
-                   'download', '--ignore-match'])
+    print('\nDownloading Crowdin translations')
+    check_run(['crowdin-cli',
+               '--config=%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
+               'download', '--ignore-match'])
 
-        print('\nDownloading Crowdin translations '
-              '(non-AOSP supported languages)')
-        check_run(['crowdin-cli',
-                   '--config=%s/crowdin/crowdin_%s_aosp.yaml' % (_DIR, branch),
-                   'download', '--ignore-match'])
 
     print('\nRemoving useless empty translation files')
     empty_contents = {
@@ -226,12 +202,7 @@ def download_crowdin(base_path, branch, xml, username, config,
     print('\nCreating a list of pushable translations')
     # Get all files that Crowdin pushed
     paths = []
-    if config:
-        files = ['%s/crowdin/%s' % (_DIR, config)]
-    else:
-        files = ['%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
-                 '%s/crowdin/crowdin_%s_aosp.yaml' % (_DIR, branch)
-                ]
+    files = [('%s/crowdin/crowdin_%s.yaml' % (_DIR, branch))]
     for c in files:
         cmd = ['crowdin-cli', '--config=%s' % c, 'list', 'sources']
         comm, ret = run_subprocess(cmd)
@@ -241,7 +212,9 @@ def download_crowdin(base_path, branch, xml, username, config,
             paths.append(p.replace('/%s' % branch, ''))
 
     print('\nUploading translations to Gerrit')
-    items = [x for sub in xml for x in sub.getElementsByTagName('project')]
+    xml_android = load_xml(x='%s/pac-rom/default.xml' % base_path)
+    items = xml_android.getElementsByTagName('project')
+    #items = [x for sub in xml for x in sub.getElementsByTagName('project')]
     all_projects = []
 
     for path in paths:
@@ -291,42 +264,31 @@ def main():
     args = parse_args()
     default_branch = args.branch
 
-    base_path = os.getenv('CM_CROWDIN_BASE_PATH')
+    base_path = os.getenv('PAC_CROWDIN_BASE_PATH')
     if base_path is None:
         cwd = os.getcwd()
-        print('You have not set CM_CROWDIN_BASE_PATH. Defaulting to %s' % cwd)
+        print('You have not set PAC_CROWDIN_BASE_PATH. Defaulting to %s' % cwd)
         base_path = cwd
     else:
-        base_path = os.path.join(os.path.realpath(base_path), default_branch)
+        base_path = os.path.join(os.path.realpath(base_path))
     if not os.path.isdir(base_path):
-        print('CM_CROWDIN_BASE_PATH + branch is not a real directory: %s'
+        print('PAC_CROWDIN_BASE_PATH + branch is not a real directory: c'
               % base_path)
         sys.exit(1)
 
     if not check_dependencies():
         sys.exit(1)
 
-    xml_android = load_xml(x='%s/android/default.xml' % base_path)
+    xml_android = load_xml(x='%s/pac-rom/default.xml' % base_path)
     if xml_android is None:
         sys.exit(1)
 
-    xml_extra = load_xml(x='%s/crowdin/extra_packages_%s.xml'
-                           % (_DIR, default_branch))
-    if xml_extra is None:
+    if not check_files(default_branch):
         sys.exit(1)
 
-    if args.config:
-        files = ['%s/crowdin/%s' % (_DIR, args.config)]
-    else:
-        files = ['%s/crowdin/crowdin_%s.yaml' % (_DIR, default_branch),
-                 '%s/crowdin/crowdin_%s_aosp.yaml' % (_DIR, default_branch)
-                 ]
-    if not check_files(files):
-        sys.exit(1)
-
-    upload_crowdin(default_branch, args.config, args.no_upload)
-    download_crowdin(base_path, default_branch, (xml_android, xml_extra),
-                     args.username, args.config, args.no_download)
+    upload_crowdin(default_branch, args.no_upload)
+    download_crowdin(base_path, default_branch, (xml_android),
+                     args.username, args.no_download)
     print('\nDone!')
 
 if __name__ == '__main__':
