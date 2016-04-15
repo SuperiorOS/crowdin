@@ -1,0 +1,36 @@
+crowdin_sync.py
+==================
+
+Introduction
+------------
+This script is used to synchronize PureNexus's translations with Crowdin's. Also, it can handle
+automatic commiting to Github and pushing/downloading to/from Crowdin.
+
+Prerequisites
+-------------
+The Ruby variant of crowdin-cli is required for this to work.
+
+    \curl -sSL https://get.rvm.io | bash -s stable --ruby
+    source /home/your_username/.rvm/scripts/rvm # Add this to your .bashrc file!
+    rvm all do gem install crowdin-cli
+
+python-git is used for Git integration.
+
+    sudo apt-get install python-git
+
+Executing
+---------
+Export the following environment variables to set the API keys and the base path.
+Base path should contain all PureNexus trees in subfolders, named after PureNexus branches:
+
+    export PURE_CROWDIN_API_KEY=your_api_key
+    export PURE_CROWDIN_BASE_PATH=your_base_path
+
+Execute:
+
+    ./crowdin_sync.py --username your_github_username --branch branch_name [--no-download|--no-upload]
+
+Bugs
+----
+ - When committing fails, the reason of it cannot be determined. Often this is just when there
+   are no new translations, so the script will not exit when this happens.

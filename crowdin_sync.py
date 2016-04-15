@@ -3,7 +3,7 @@
 # crowdin_sync.py
 #
 # Updates Crowdin source translations and pushes translations
-# directly to DU's Gerrit.
+# directly to PureNexus Github.
 #
 # Copyright (C) 2014-2015 The CyanogenMod Project
 # This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
@@ -75,7 +75,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Create commit; if it fails, probably empty so skipping
     try:
-        repo.git.commit(m='Automatic translation import')
+        repo.git.commit(m='PureNexus Automatic translation import')
     except:
         print('Failed to create commit for %s, probably empty: skipping'
               % name, file=sys.stderr)
@@ -83,8 +83,8 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('ssh://%s@review.dirtyunicorns.com:29418/%s' % (username, name),
-                      'HEAD:refs/drafts/%s%%topic=translation' % branch)
+        repo.git.push('git@github.com:PureNexusProject/%s' % (name),
+                      'HEAD:%s' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
         print('Failed to push commit for %s' % name, file=sys.stderr)
@@ -109,16 +109,16 @@ def find_xml(base_path):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Synchronising DU's translations with Crowdin")
+        description="Synchronising PureNexus translations with Crowdin")
     sync = parser.add_mutually_exclusive_group()
     parser.add_argument('-u', '--username', help='Gerrit username',
                         required=True)
-    parser.add_argument('-b', '--branch', help='DU branch',
+    parser.add_argument('-b', '--branch', help='Pure branch',
                         required=True)
     sync.add_argument('--no-upload', action='store_true',
-                      help='Only download DU translations from Crowdin')
+                      help='Only download PureNexus translations from Crowdin')
     sync.add_argument('--no-download', action='store_true',
-                      help='Only upload DU source translations to Crowdin')
+                      help='Only upload PureNexus source translations to Crowdin')
     return parser.parse_args()
 
 # ################################# PREPARE ################################## #
@@ -211,7 +211,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
         for p in str(comm[0]).split("\n"):
             paths.append(p.replace('/%s' % branch, ''))
 
-    print('\nUploading translations to Gerrit')
+    print('\nUploading translations to Github')
     xml_android = load_xml(x='%s/manifest/default.xml' % base_path)
     items = xml_android.getElementsByTagName('project')
     #items = [x for sub in xml for x in sub.getElementsByTagName('project')]
@@ -264,15 +264,15 @@ def main():
     args = parse_args()
     default_branch = args.branch
 
-    base_path = os.getenv('DU_CROWDIN_BASE_PATH')
+    base_path = os.getenv('PURE_CROWDIN_BASE_PATH')
     if base_path is None:
         cwd = os.getcwd()
-        print('You have not set DU_CROWDIN_BASE_PATH. Defaulting to %s' % cwd)
+        print('You have not set PURE_CROWDIN_BASE_PATH. Defaulting to %s' % cwd)
         base_path = cwd
     else:
         base_path = os.path.join(os.path.realpath(base_path))
     if not os.path.isdir(base_path):
-        print('DU_CROWDIN_BASE_PATH + branch is not a real directory: c'
+        print('PURE_CROWDIN_BASE_PATH + branch is not a real directory: c'
               % base_path)
         sys.exit(1)
 
