@@ -213,7 +213,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
             paths.append(p.replace('/%s' % branch, ''))
 
     print('\nUploading translations to Github')
-    xml_android = load_xml(x='%s/manifest/default.xml' % base_path)
+    xml_android = load_xml(x='%s/manifest/crowdin.xml' % base_path)
     items = xml_android.getElementsByTagName('project')
     #items = [x for sub in xml for x in sub.getElementsByTagName('project')]
     all_projects = []
@@ -280,7 +280,7 @@ def main():
     if not check_dependencies():
         sys.exit(1)
 
-    xml_android = load_xml(x='%s/manifest/default.xml' % base_path)
+    xml_android = load_xml(x='%s/manifest/crowdin.xml' % base_path)
     if xml_android is None:
         sys.exit(1)
 
