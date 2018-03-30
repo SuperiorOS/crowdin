@@ -1,8 +1,8 @@
-# crowdin-8.1.x.yaml
+# crowdin-dot-o.yaml
 #
 # Crowdin configuration file for AospExtended
 #
-# Copyright (C) 2017 AospExtended Project
+# Copyright (C) 2018 dotOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 
 api_key: <%= ENV['CROWDIN_API_KEY'] %>
 base_path: <%= ENV['CROWDIN_BASE_PATH'] %>
-project_identifier: aospextended-rom
+project_identifier: dotos
 preserve_hierarchy: true
 
 files:
-# Default for AospExtended
+# Default for dotOS
   -
-    source:      '/**/values/ex_strings.xml'
+    source:      '/**/values/dot_strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: &anchor
       android_code:
@@ -122,9 +122,9 @@ files:
         zh-TW: zh-rTW
         zu: zu
 
-# Extensions
+# DotExtras
   -
-    source:      '/packages/apps/Extensions/res/values/strings.xml'
+    source:      '/packages/apps/DotExtras/res/values/strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
@@ -134,20 +134,21 @@ files:
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-# OmniJaws
-  -
-    source:      '/packages/services/OmniJaws/res/values/*strings.xml'
-    translation: '/%original_path%-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
-#PackageInstaller
+# PackageInstaller
   -
     source:      '/packages/apps/PackageInstaller/res/values/custom_strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-# Updates
+# DotOTA
   -
-    source:      '/packages/apps/Updates/app/src/main/res/values/strings.xml'
+    source:      '/packages/apps/DotOTA/res/values/strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
+    
+# DotUICenter
+  -
+    source:      '/packages/apps/DotUICenter/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor    
+    

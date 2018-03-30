@@ -3,7 +3,7 @@ crowdin_sync.py
 
 Introduction
 ------------
-This script is used to synchronize AospExtended's translations with Crowdin's. Also, it can handle
+This script is used to synchronize DotOS translations with Crowdin's. Also, it can handle
 automatic commiting to Github and pushing/downloading to/from Crowdin.
 
 Prerequisites
@@ -21,7 +21,7 @@ python-git is used for Git integration.
 Executing
 ---------
 Export the following environment variables to set the API keys and the base path.
-Base path should contain all AospExtended trees in subfolders, named after AospExtended branches:
+Base path should contain all DotOS trees in subfolders, named after dotOS branches:
 
     export CROWDIN_BASE_PATH=your_base_path
 

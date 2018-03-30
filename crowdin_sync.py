@@ -3,11 +3,12 @@
 # crowdin_sync.py
 #
 # Updates Crowdin source translations and pushes translations
-# directly to AospExtended Github.
+# directly to dotOS Github.
 #
 # Copyright (C) 2014-2015 The CyanogenMod Project
 # This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
 # This code has been modified. Portions copyright (C) 2017, AospExtended
+# This code has been modified. Portions copyright (C) 2018, dotOS
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -76,7 +77,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Create commit; if it fails, probably empty so skipping
     try:
-        repo.git.commit(m='Automatic translation import')
+        repo.git.commit(m='dotos Automatic translation import')
     except:
         print('Failed to create commit for %s, probably empty: skipping'
               % name, file=sys.stderr)
@@ -84,7 +85,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('ssh://%s@gerrit.aospextended.com:29418/AospExtended/%s' % (username, name),
+        repo.git.push('ssh://%s@gerrit.dotos.com:29418/dotos/%s' % (username, name),
                       'HEAD:refs/for/%s%%topic=translation' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
