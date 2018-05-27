@@ -3,7 +3,7 @@
 # crowdin_sync.py
 #
 # Updates Crowdin source translations and pushes translations
-# directly to dotOS Github.
+# directly to dotOS Gerrit.
 #
 # Copyright (C) 2014-2015 The CyanogenMod Project
 # This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
@@ -213,7 +213,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
         for p in str(comm[0]).split("\n"):
             paths.append(p.replace('/%s' % branch, ''))
 
-    print('\nUploading translations to Github')
+    print('\nUploading translations to Gerrit')
     xml_android = load_xml(x='%s/.repo/manifests/crowdin.xml' % base_path)
     items = xml_android.getElementsByTagName('project')
     #items = [x for sub in xml for x in sub.getElementsByTagName('project')]
@@ -228,7 +228,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
             print('WARNING: Cannot determine project root dir of '
                   '[%s], skipping.' % path)
             continue
-        result = path.split('/res')[0].strip('/')
+        result = path.rsplit('/res',1)[0].strip('/')
         if result == path.strip('/'):
             print('WARNING: Cannot determine project root dir of '
                   '[%s], skipping.' % path)
