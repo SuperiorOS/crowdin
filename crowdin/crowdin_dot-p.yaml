@@ -130,13 +130,44 @@ files:
 
 # FMRadio
   -
-    source:      '/packages/apps/FMRadio/res/values/custom_strings.xml'
+    source:      '/packages/apps/FMRadio/res/values/cm_strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-# PackageInstaller
+# Gallery2
   -
-    source:      '/packages/apps/PackageInstaller/res/values/custom_strings.xml'
+    source:      '/packages/apps/Gallery2/res/values/custom_strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+# devicesettings
+  -
+    source:      '/packages/apps/resources/devicesettings/res/values/strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor   
+
+# SystemUpdates
+  -
+    source:      '/packages/apps/SystemUpdates/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+# WeatherClient
+  -
+    source:      '/packages/apps/WeatherClient/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+# SmartNav
+  -
+    source:      '/packages/apps/SmartNav/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+
+# SmartNavSettings
+  -
+    source:      '/packages/apps/SmartNavSettings/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
     
