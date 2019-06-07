@@ -77,7 +77,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Create commit; if it fails, probably empty so skipping
     try:
-        repo.git.commit(m='dotos Automatic translation import')
+        repo.git.commit(m='Automatic translation import')
     except:
         print('Failed to create commit for %s, probably empty: skipping'
               % name, file=sys.stderr)
@@ -85,7 +85,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('ssh://mohancm@gerrit.droidontime.com:29418/DotOS/%s' % (username, name),
+        repo.git.push('ssh://mohancm@review.droidontime.com:29418/DotOS/%s' % (username, name),
                       'HEAD:refs/for/dot-p' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
