@@ -1,8 +1,8 @@
-# crowdin-dot-o.yaml
+# crowdin-pie.yaml
 #
 # Crowdin configuration file for AospExtended
 #
-# Copyright (C) 2018 dotOS Project
+# Copyright (C) 2019 Superior OS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 
 api_key: <%= ENV['CROWDIN_API_KEY'] %>
 base_path: <%= ENV['CROWDIN_BASE_PATH'] %>
-project_identifier: dotos
+project_identifier: superioros
 preserve_hierarchy: true
 
 files:
-# Default for dotOS
+# Default for Superior OS
   -
-    source:      '/**/values/dot_strings.xml'
+    source:      '/**/values/superior_strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: &anchor
       android_code:

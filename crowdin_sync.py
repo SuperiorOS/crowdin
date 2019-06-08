@@ -3,12 +3,13 @@
 # crowdin_sync.py
 #
 # Updates Crowdin source translations and pushes translations
-# directly to dotOS Gerrit.
+# directly to Superior OS Github.
 #
 # Copyright (C) 2014-2015 The CyanogenMod Project
 # This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
 # This code has been modified. Portions copyright (C) 2017, AospExtended
 # This code has been modified. Portions copyright (C) 2018, dotOS
+# This code has been modified. Portions copyright (C) 2019, Superior OS
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -85,8 +86,8 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('ssh://mohancm@review.droidontime.com:29418/DotOS/%s' % (username, name),
-                      'HEAD:refs/for/dot-p' % branch)
+        repo.git.push('git@github.com:SuperiorOS/%s' % (username, name),
+                      'HEAD:%s' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
         print('Failed to push commit for %s' % name, file=sys.stderr)
