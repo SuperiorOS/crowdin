@@ -25,6 +25,10 @@ Base path should contain all Superior OS trees in subfolders, named after Superi
 
     export CROWDIN_BASE_PATH=your_base_path
 
+Setup translation source:
+
+    repo init -u https://github.com/SuperiorOS/manifest -b pie -m crowdin.xml --depth=1
+
 Execute:
 
     ./crowdin_sync.py --username your_github_username --branch branch_name [--no-download|--no-upload]
