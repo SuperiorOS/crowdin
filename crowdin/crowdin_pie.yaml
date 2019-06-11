@@ -122,8 +122,15 @@ files:
         zh-TW: zh-rTW
         zu: zu
 
-# SuperiorSettings
+# SmartNav
   -
-    source:      '/packages/apps/SuperiorSettings/res/values/superior_strings.xml'
+    source:      '/packages/apps/SmartNav/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+
+# SmartNavSettings
+  -
+    source:      '/packages/apps/SmartNavSettings/res/values/strings.xml'
     translation: '/%original_path%-%android_code%/%original_file_name%'
     languages_mapping: *anchor
