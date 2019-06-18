@@ -8,8 +8,6 @@
 # Copyright (C) 2014-2015 The CyanogenMod Project
 # This code has been modified. Portions copyright (C) 2016, The PAC-ROM Project
 # This code has been modified. Portions copyright (C) 2017, AospExtended
-# This code has been modified. Portions copyright (C) 2018, dotOS
-# This code has been modified. Portions copyright (C) 2019, Superior OS
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -86,7 +84,7 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push('git@github.com:SuperiorOS/%s' % (username, name),
+        repo.git.push('git@github.com:SuperiorOS/%s' % (name),
                       'HEAD:%s' % branch)
         print('Successfully pushed commit for %s' % name)
     except:
@@ -181,6 +179,27 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
                'download', '--ignore-match'])
 
 
+    print('\nRemoving useless empty translation files')
+    empty_contents = {
+        '<resources/>',
+        '<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>',
+        ('<resources xmlns:android='
+         '"http://schemas.android.com/apk/res/android"/>'),
+        ('<resources xmlns:android="http://schemas.android.com/apk/res/android"'
+         ' xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>'),
+        ('<resources xmlns:tools="http://schemas.android.com/tools"'
+         ' xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>')
+    }
+    xf = None
+    for xml_file in find_xml(base_path):
+        xf = open(xml_file).read()
+        for line in empty_contents:
+            if line in xf:
+                print('Removing ' + xml_file)
+                os.remove(xml_file)
+                break
+    del xf
+
     print('\nCreating a list of pushable translations')
     # Get all files that Crowdin pushed
     paths = []
@@ -193,8 +212,8 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
         for p in str(comm[0]).split("\n"):
             paths.append(p.replace('/%s' % branch, ''))
 
-    print('\nUploading translations to Gerrit')
-    xml_android = load_xml(x='%s/.repo/manifests/crowdin.xml' % base_path)
+    print('\nUploading translations to Github')
+    xml_android = load_xml(x='%s/manifest/crowdin.xml' % base_path)
     items = xml_android.getElementsByTagName('project')
     #items = [x for sub in xml for x in sub.getElementsByTagName('project')]
     all_projects = []
@@ -208,7 +227,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
             print('WARNING: Cannot determine project root dir of '
                   '[%s], skipping.' % path)
             continue
-        result = path.rsplit('/res',1)[0].strip('/')
+        result = path.split('/res')[0].strip('/')
         if result == path.strip('/'):
             print('WARNING: Cannot determine project root dir of '
                   '[%s], skipping.' % path)
@@ -261,7 +280,7 @@ def main():
     if not check_dependencies():
         sys.exit(1)
 
-    xml_android = load_xml(x='%s/.repo/manifests/crowdin.xml' % base_path)
+    xml_android = load_xml(x='%s/manifest/crowdin.xml' % base_path)
     if xml_android is None:
         sys.exit(1)
 
