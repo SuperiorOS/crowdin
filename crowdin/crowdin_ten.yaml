@@ -121,3 +121,21 @@ files:
         zh-HK: zh-rHK
         zh-TW: zh-rTW
         zu: zu
+
+# OmniStyle
+  -
+    source:      '/packages/apps/OmniStyle/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+# Updater
+  -
+    source:      '/packages/apps/Updater/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+# OmniJaws
+  -
+    source:      '/packages/services/OmniJaws/res/values/strings.xml'
+    translation: '/%original_path%-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
