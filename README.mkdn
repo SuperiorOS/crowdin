@@ -1,3 +1,9 @@
+Localized
+----------
+[![Crowdin](https://badges.crowdin.net/superior-os/localized.svg)](https://crowdin.com/project/superior-os)
+
+
+
 crowdin_sync.py
 ==================
 
@@ -37,3 +43,4 @@ Bugs
 ----
  - When committing fails, the reason of it cannot be determined. Often this is just when there
    are no new translations, so the script will not exit when this happens.
+   
