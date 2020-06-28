@@ -1,22 +1,16 @@
-Localized
-----------
-[![Crowdin](https://badges.crowdin.net/superior-os/localized.svg)](https://crowdin.com/project/superior-os)
-
-
-
 crowdin_sync.py
 ==================
 
 Introduction
 ------------
-This script is used to synchronize Superior OS translations with Crowdin's. Also, it can handle
-automatic commiting to Github and pushing/downloading to/from Crowdin.
+This script is used to synchronize Superior's translations with Crowdin's. Also, it can handle
+automatic commiting to Gerrit and pushing/downloading to/from Crowdin.
 
 Prerequisites
 -------------
 The Ruby variant of crowdin-cli is required for this to work.
 
-    \curl -sSL https://get.rvm.io | bash -s stable --ruby
+    curl -sSL https://get.rvm.io | bash -s stable --ruby
     source /home/your_username/.rvm/scripts/rvm # Add this to your .bashrc file!
     rvm all do gem install crowdin-cli
 
@@ -27,20 +21,16 @@ python-git is used for Git integration.
 Executing
 ---------
 Export the following environment variables to set the API keys and the base path.
-Base path should contain all Superior OS trees in subfolders, named after Superior OS branches:
+Base path should contain all Superior trees in subfolders, named after Superior branches:
 
-    export CROWDIN_BASE_PATH=your_base_path
-
-Setup translation source:
-
-    repo init -u https://github.com/SuperiorOS/manifest -b ten -m crowdin.xml --depth=1
+    export SUPERIOR_CROWDIN_API_KEY=your_api_key
+    export SUPERIOR_CROWDIN_BASE_PATH=your_base_path
 
 Execute:
 
-    ./crowdin_sync.py --username your_github_username --branch branch_name [--no-download|--no-upload]
+    ./crowdin_sync.py [--no-download|--no-upload]
 
 Bugs
 ----
  - When committing fails, the reason of it cannot be determined. Often this is just when there
    are no new translations, so the script will not exit when this happens.
-   
