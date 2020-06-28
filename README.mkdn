@@ -2,45 +2,45 @@ Localized
 ----------
 [![Crowdin](https://badges.crowdin.net/superior-os/localized.svg)](https://crowdin.com/project/superior-os)
 
-
-
 crowdin_sync.py
 ==================
 
 Introduction
 ------------
-This script is used to synchronize Superior OS translations with Crowdin's. Also, it can handle
-automatic commiting to Github and pushing/downloading to/from Crowdin.
+This script is used to synchronize SuperiorOS's translations with Crowdin's. Also, it can handle
+automatic commiting to Gerrit and pushing/downloading to/from Crowdin.
 
 Prerequisites
 -------------
-The Ruby variant of crowdin-cli is required for this to work.
+The Java variant of crowdin is required for this to work.
 
-    \curl -sSL https://get.rvm.io | bash -s stable --ruby
-    source /home/your_username/.rvm/scripts/rvm # Add this to your .bashrc file!
-    rvm all do gem install crowdin-cli
+    wget -qO - https://artifacts.crowdin.com/repo/GPG-KEY-crowdin | sudo apt-key add -
+    echo 'deb https://artifacts.crowdin.com/repo/deb/ /' | sudo tee /etc/apt/sources.list.d/crowdin.list > /dev/null
+    sudo apt-get update && sudo apt-get install crowdin
 
-python-git is used for Git integration.
+The following tools are also required to run the tool:
 
-    sudo apt-get install python-git
+    sudo apt-get install python-git python-yaml python-lxml
+
 
 Executing
 ---------
 Export the following environment variables to set the API keys and the base path.
-Base path should contain all Superior OS trees in subfolders, named after Superior OS branches:
+Each SuperiorOSs version requires a different environment variable set for the base path that depends on the branch name.
 
-    export CROWDIN_BASE_PATH=your_base_path
+    export CROWDIN_API_KEY=your_api_key
+    export CROWDIN_BASE_PATH=base_path_for_rom
 
-Setup translation source:
+Example:
 
-    repo init -u https://github.com/SuperiorOS/manifest -b ten -m crowdin.xml --depth=1
+    export BLISS_CROWDIN_API_KEY=1234567890
+    export BLISS_CROWDIN_BASE_PATH_Q=/home/user/superior
 
 Execute:
 
-    ./crowdin_sync.py --username your_github_username --branch branch_name [--no-download|--no-upload]
+    ./crowdin_sync.py --username your_gerrit_username --branch bliss_version [--upload-sources] [--upload-translations] [--download] [--submit]
 
 Bugs
 ----
  - When committing fails, the reason of it cannot be determined. Often this is just when there
    are no new translations, so the script will not exit when this happens.
-   
