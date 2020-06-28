@@ -55,7 +55,7 @@ def run_subprocess(cmd, silent=False):
     return comm, exit_code
 
 
-def push_as_commit(base_path, path, name, branch, username):
+def push_as_commit(base_path, path, name, branch):
     print('Committing %s on branch %s' % (name, branch))
 
     # Get path
@@ -82,10 +82,12 @@ def push_as_commit(base_path, path, name, branch, username):
               % name, file=sys.stderr)
         return
 
-    # Push commit
+    topic = 'translations'
+    if 'SuperiorOS-Devices' in name:
+        topic += "-" + name.split('_')[-1]
+    # Push commit to gerrit
     try:
-        repo.git.push('ssh://%s@gerrit.superioros.org:29418/%s' % (username, name),
-                      'HEAD:refs/for/%s%%topic=translation' % branch)
+        repo.git.push(f'ssh://gerrit.superioros.org:29418/{name}', f'HEAD:refs/for/ten', '-o', f'topic={topic}')
         print('Successfully pushed commit for %s' % name)
     except:
         print('Failed to push commit for %s' % name, file=sys.stderr)
@@ -178,6 +180,26 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
                '--config=%s/crowdin/crowdin_%s.yaml' % (_DIR, branch),
                'download', '--ignore-match'])
 
+    print('\nRemoving useless empty translation files')
+    empty_contents = {
+        '<resources/>',
+        '<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>',
+        ('<resources xmlns:android='
+         '"http://schemas.android.com/apk/res/android"/>'),
+        ('<resources xmlns:android="http://schemas.android.com/apk/res/android"'
+         ' xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>'),
+        ('<resources xmlns:tools="http://schemas.android.com/tools"'
+         ' xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"/>')
+    }
+    xf = None
+    for xml_file in find_xml(base_path):
+        xf = open(xml_file).read()
+        for line in empty_contents:
+            if line in xf:
+                print('Removing ' + xml_file)
+                os.remove(xml_file)
+                break
+    del xf
 
     print('\nCreating a list of pushable translations')
     # Get all files that Crowdin pushed
@@ -236,7 +258,7 @@ def download_crowdin(base_path, branch, xml, username, no_download=False):
             br = project.getAttribute('revision') or branch
 
             push_as_commit(base_path, result,
-                           project.getAttribute('name'), br, username)
+                           project.getAttribute('name'), br)
             break
 
 
@@ -268,7 +290,7 @@ def main():
 
     upload_crowdin(default_branch, args.no_upload)
     download_crowdin(base_path, default_branch, (xml_android),
-                     args.username, args.no_download)
+                      args.no_download)
     print('\nDone!')
 
 if __name__ == '__main__':
