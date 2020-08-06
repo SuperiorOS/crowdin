@@ -82,14 +82,13 @@ def push_as_commit(base_path, path, name, branch, username):
               % name, file=sys.stderr)
         return
 
-    # Push commit
+    topic = 'translations'
+    # Push commit to gerrit
     try:
-        repo.git.push('ssh://%s@gerrit.superioros.org:29418/%s' % (username, name),
-                      'HEAD:refs/for/%s%%topic=translation' % branch)
+        repo.git.push(f'ssh://gerrit.superioros.org:29418/SuperiorOS/{name}', f'HEAD:refs/for/ten%topic={topic}')
         print('Successfully pushed commit for %s' % name)
     except:
         print('Failed to push commit for %s' % name, file=sys.stderr)
-
 
 def check_run(cmd):
     p = subprocess.Popen(cmd, stdout=sys.stdout, stderr=sys.stderr)
