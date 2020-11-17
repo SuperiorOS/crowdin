@@ -33,7 +33,7 @@ Base path should contain all Superior OS trees in subfolders, named after Superi
 
 Setup translation source:
 
-    repo init -u https://github.com/SuperiorOS/manifest -b ten -m crowdin.xml --depth=1
+    repo init -u https://github.com/SuperiorOS/manifest -b eleven -m crowdin.xml --depth=1
 
 Execute:
 
