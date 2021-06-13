@@ -24,7 +24,9 @@
 # ################################# IMPORTS ################################## #
 
 from __future__ import print_function
+from datetime import datetime
 
+import pytz
 import argparse
 import git
 import os
@@ -76,7 +78,9 @@ def push_as_commit(base_path, path, name, branch, username):
 
     # Create commit; if it fails, probably empty so skipping
     try:
-        repo.git.commit(m='Automatic translation import')
+        ts = datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%Y %B %d, %I:%M %p')
+        cm = 'Automatic translation import | {}'.format(ts)
+        repo.git.commit(m=cm)
     except:
         print('Failed to create commit for %s, probably empty: skipping'
               % name, file=sys.stderr)
