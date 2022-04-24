@@ -283,8 +283,8 @@ def push_as_commit(config_files, base_path, path, name, branch, username):
 
     # Push commit
     try:
-        repo.git.push(f'ssh://{username}@review.superioros.org:29400/{name}',
-                      f'HEAD:refs/for/{branch}%topic=translation')
+        repo.git.push(f'git@github.com:SuperiorOS/{name}',
+                      f'HEAD:{branch}')
         print('Success')
     except Exception as e:
         print(e, '\nFailed to push!', file=sys.stderr)
