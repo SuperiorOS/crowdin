@@ -258,6 +258,12 @@ files:
     translation: '/packages/apps/Launcher3/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
+  # packages/apps/Launcher3/quickstep
+  -
+    source:      '/packages/apps/Launcher3/quickstep/res/values/superior_strings.xml'
+    translation: '/packages/apps/Launcher3/quickstep/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
   # packages/apps/SuperiorSettings
   -
     source:      '/packages/apps/SuperiorSettings/res/values/superior_strings.xml'
