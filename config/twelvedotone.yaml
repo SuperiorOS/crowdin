@@ -282,3 +282,8 @@ files:
     translation: '/packages/apps/Updater/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
   
+  # packages/apps/Gamespace
+  -
+    source:      '/packages/apps/GameSpace/app/src/main/res/values/strings.xml'
+    translation: '/packages/apps/GameSpace/app/src/main/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
