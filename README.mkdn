@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 Setup translation source:
 
-    repo init -u https://github.com/SuperiorOS/manifest -b twelvedotone -m crowdin.xml --depth=1
+    repo init -u https://github.com/SuperiorOS/manifest -b thirteen -m crowdin.xml --depth=1
 
 Executing
 ---------
