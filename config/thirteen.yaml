@@ -282,3 +282,21 @@ files:
     source:      '/packages/apps/GameSpace/app/src/main/res/values/strings.xml'
     translation: '/packages/apps/GameSpace/app/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
+
+  # packages/apps/Matlog
+  -
+    source:      '/packages/apps/Matlog/app/src/main/res/values/strings.xml'
+    translation: '/packages/apps/Matlog/app/src/main/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+  # packages/apps/Dialer/java/com/android/dialer/app
+  -
+    source:      '/packages/apps/Dialer/java/com/android/dialer/app/res/values/cm_strings.xml'
+    translation: '/packages/apps/Dialer/java/com/android/dialer/app/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+  # packages/apps/Dialer/java/com/android/incallui
+  -
+    source:      '/packages/apps/Dialer/java/com/android/incallui/res/values/cm_strings.xml'
+    translation: '/packages/apps/Dialer/java/com/android/incallui/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
