@@ -300,3 +300,9 @@ files:
     source:      '/packages/apps/Dialer/java/com/android/incallui/res/values/cm_strings.xml'
     translation: '/packages/apps/Dialer/java/com/android/incallui/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
+
+  # Superiorwalls
+  -
+    source:      '/Superiorwalls/library/src/main/res/values/translatable_strings.xml'
+    translation: '/Superiorwalls/library/src/main/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
