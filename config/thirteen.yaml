@@ -289,6 +289,13 @@ files:
     translation: '/packages/apps/Matlog/app/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
+  # packages/apps/OmniJaws
+  -
+    source:      '/packages/services/OmniJaws/res/values/strings.xml'
+    translation: '/packages/services/OmniJaws/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+
   # packages/apps/Dialer/java/com/android/dialer/app
   -
     source:      '/packages/apps/Dialer/java/com/android/dialer/app/res/values/cm_strings.xml'
