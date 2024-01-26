@@ -4,7 +4,7 @@
 # Copyright (C) 2014-2016 The CyanogenMod Project
 # Copyright (C) 2017-2020 The LineageOS Project
 # Copyright (C) 2017-2020 The PixelExperience Project
-# Copyright (C) 2022 The SuperiorOS Project
+# Copyright (C) 2022-2024 The SuperiorOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -283,16 +283,10 @@ files:
     translation: '/packages/apps/GameSpace/app/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-  # packages/apps/Matlog
-  -
-    source:      '/packages/apps/Matlog/app/src/main/res/values/strings.xml'
-    translation: '/packages/apps/Matlog/app/src/main/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
   # packages/apps/OmniJaws
   -
-    source:      '/packages/services/OmniJaws/res/values/strings.xml'
-    translation: '/packages/services/OmniJaws/res/values-%android_code%/%original_file_name%'
+    source:      '/packages/services/OmniJaws/app/src/main/res/values/strings.xml'
+    translation: '/packages/services/OmniJaws/app/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
 
@@ -306,10 +300,4 @@ files:
   -
     source:      '/packages/apps/Dialer/java/com/android/incallui/res/values/cm_strings.xml'
     translation: '/packages/apps/Dialer/java/com/android/incallui/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
-  # Superiorwalls
-  -
-    source:      '/Superiorwalls/library/src/main/res/values/translatable_strings.xml'
-    translation: '/Superiorwalls/library/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
