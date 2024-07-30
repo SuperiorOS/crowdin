@@ -247,12 +247,6 @@ files:
     translation: '/frameworks/base/packages/SystemUI/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-  # frameworks/base/packages/SettingsLib
-  -
-    source:      '/frameworks/base/packages/SettingsLib/res/values/superior_strings.xml'
-    translation: '/frameworks/base/packages/SettingsLib/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
   # packages/apps/Launcher3
   -
     source:      '/packages/apps/Launcher3/res/values/superior_strings.xml'
@@ -273,14 +267,8 @@ files:
 
   # packages/apps/Updater
   -
-    source:      '/packages/apps/Updater/res/values/strings.xml'
-    translation: '/packages/apps/Updater/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-  
-  # packages/apps/Gamespace
-  -
-    source:      '/packages/apps/GameSpace/app/src/main/res/values/strings.xml'
-    translation: '/packages/apps/GameSpace/app/src/main/res/values-%android_code%/%original_file_name%'
+    source:      '/packages/apps/Updater/app/src/main/res/values/strings.xml'
+    translation: '/packages/apps/Updater/app/src/main/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
   # packages/apps/OmniJaws
