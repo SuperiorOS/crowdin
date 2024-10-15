@@ -241,6 +241,18 @@ files:
         # Zulu
         zu: zu
 
+  # packages/apps/Dialer/java/com/android/dialer/app
+  -
+    source:      '/packages/apps/Dialer/java/com/android/dialer/app/res/values/cm_strings.xml'
+    translation: '/packages/apps/Dialer/java/com/android/dialer/app/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+  # packages/apps/Dialer/java/com/android/incallui
+  -
+    source:      '/packages/apps/Dialer/java/com/android/incallui/res/values/cm_strings.xml'
+    translation: '/packages/apps/Dialer/java/com/android/incallui/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
   # frameworks/base/packages/SystemUI
   -
     source:      '/frameworks/base/packages/SystemUI/res/values/superior_strings.xml'
@@ -253,10 +265,16 @@ files:
     translation: '/packages/apps/Launcher3/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
-  # packages/apps/SuperiorLab
+  # packages/apps/OmniJaws
   -
-    source:      '/packages/apps/SuperiorLab/res/values/superior_strings.xml'
-    translation: '/packages/apps/SuperiorLab/res/values-%android_code%/%original_file_name%'
+    source:      '/packages/services/OmniJaws/app/src/main/res/values/strings.xml'
+    translation: '/packages/services/OmniJaws/app/src/main/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
+  # packages/apps/OmniStyle
+  -
+    source:      '/packages/apps/OmniStyle/res/values/strings.xml'
+    translation: '/packages/apps/OmniStyle/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
   # packages/apps/Settings
@@ -265,27 +283,14 @@ files:
     translation: '/packages/apps/Settings/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
 
+  # packages/apps/SuperiorLab
+  -
+    source:      '/packages/apps/SuperiorLab/res/values/superior_strings.xml'
+    translation: '/packages/apps/SuperiorLab/res/values-%android_code%/%original_file_name%'
+    languages_mapping: *anchor
+
   # packages/apps/Updater
   -
     source:      '/packages/apps/Updater/app/src/main/res/values/strings.xml'
     translation: '/packages/apps/Updater/app/src/main/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
-  # packages/apps/OmniJaws
-  -
-    source:      '/packages/services/OmniJaws/app/src/main/res/values/strings.xml'
-    translation: '/packages/services/OmniJaws/app/src/main/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
-
-  # packages/apps/Dialer/java/com/android/dialer/app
-  -
-    source:      '/packages/apps/Dialer/java/com/android/dialer/app/res/values/cm_strings.xml'
-    translation: '/packages/apps/Dialer/java/com/android/dialer/app/res/values-%android_code%/%original_file_name%'
-    languages_mapping: *anchor
-
-  # packages/apps/Dialer/java/com/android/incallui
-  -
-    source:      '/packages/apps/Dialer/java/com/android/incallui/res/values/cm_strings.xml'
-    translation: '/packages/apps/Dialer/java/com/android/incallui/res/values-%android_code%/%original_file_name%'
     languages_mapping: *anchor
